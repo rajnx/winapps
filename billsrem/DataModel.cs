@@ -9,7 +9,11 @@ namespace BillsReminder
     public enum BillType
     {
         CreditCard,
-        Regular
+        Loan,
+        Phone,
+        Internet,
+        School,
+        Rent
     }
 
     public sealed class Bill
@@ -18,13 +22,17 @@ namespace BillsReminder
         private string subTitle;
         private string imagePath;
         private BillType billType;
+        private DateTime dueDate;
+        private bool isPaid;
 
-        public Bill(string title, string subtitle, string imagepath, BillType billsType)
+        public Bill(string title, string subtitle, string imagepath, BillType billType, bool isPaid, DateTime dueDate)
         {
             this.title = title;
             this.subTitle = subtitle;
             this.imagePath = imagepath;
-            this.billType = billsType;
+            this.billType = billType;
+            this.dueDate = dueDate;
+            this.isPaid = isPaid;
         }
 
         public string Title

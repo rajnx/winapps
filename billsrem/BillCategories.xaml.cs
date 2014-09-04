@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Collections.ObjectModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -14,21 +13,24 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Collections.ObjectModel;
+using Windows.Data.Xml.Dom;
+using Windows.Storage;
 
-// The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
+// The Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234233
 
 namespace BillsReminder
 {
     /// <summary>
-    /// A basic page that provides characteristics common to most applications.
+    /// A page that displays a collection of item previews.  In the Split Application this page
+    /// is used to display and select one of the available groups.
     /// </summary>
-    public sealed partial class HomePage : Page
+    public sealed partial class BillCategories : Page
     {
-
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        public ObservableCollection<Bill> Bill = new ObservableCollection<Bill>();
+        public ObservableCollection<Bill> bills = new ObservableCollection<Bill>();
 
         /// <summary>
         /// This can be changed to a strongly typed view model.
@@ -47,29 +49,50 @@ namespace BillsReminder
             get { return this.navigationHelper; }
         }
 
+        public void LoadBills(ObservableCollection<Bill> bills)
+        {
+            XmlDocument billCategoriesXML = new XmlDocument();
+            
+            try
+            {
+                string categoriesXML = @"Assets\BillCategories.xml";
+                StorageFolder InstallationFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
 
-        public HomePage()
+                billCategoriesXML.LoadXml(InstallationFolder.Path + categoriesXML);
+                
+                XmlNodeList xmlList = billCategoriesXML.SelectNodes("/Categories/Bill");
+
+                foreach (XmlElement element in xmlList)
+                {
+                    string name = element.GetAttribute("Name");
+                    string imagePath = element.GetAttribute("ImagePath");
+                    string portalUrl = element.GetAttribute("PortalUrl");
+                    string type = element.GetAttribute("Type");
+                    string isPaid = element.SelectSingleNode("/IsPaid").InnerText;
+                    string dueDate = element.SelectSingleNode("/DueDate").InnerText;
+
+                    Bill bill = new Bill(name, "", imagePath, (BillType)Convert.ToInt16(type), Convert.ToBoolean(isPaid), Convert.ToDateTime(dueDate));
+                    bills.Add(bill);
+                }
+            }
+            catch(Exception e)
+            {
+                string error = e.Message;
+            }
+        }
+
+        public BillCategories()
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
-            this.navigationHelper.SaveState += navigationHelper_SaveState;
 
-            //Bill.Add(new Bill("Credit Card", "Pay Credit Cards Bill", "", BillType.CreditCard));
-            //Bill.Add(new Bill("Home Loan", "Pay Home Loan Bill", "", BillType.Regular));
-            //Bill.Add(new Bill("Internet", "Pay Internet Bill", "", BillType.Regular));
-            //Bill.Add(new Bill("Apartment Rent", "Pay Apartment Rent", "", BillType.Regular));
-            //Bill.Add(new Bill("Phone", "Pay Phone Bill", "", BillType.Regular));
-            //Bill.Add(new Bill("School/DayCare Fees", "Pay School/DayCare Fees", "", BillType.Regular));
-            //Bill.Add(new Bill("Car Loan", "Pay Car Loan EMI", "", BillType.Regular));
-
-
-            //this.DataContext = Bill;
-
+            LoadBills(bills);
+            this.DataContext = bills;
         }
 
         /// <summary>
-        /// Populates the page with content passed during navigation. Any saved state is also
+        /// Populates the page with content passed during navigation.  Any saved state is also
         /// provided when recreating a page from a prior session.
         /// </summary>
         /// <param name="sender">
@@ -78,21 +101,10 @@ namespace BillsReminder
         /// <param name="e">Event data that provides both the navigation parameter passed to
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
-        /// session. The state will be null the first time a page is visited.</param>
+        /// session.  The state will be null the first time a page is visited.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Preserves state associated with this page in case the application is suspended or the
-        /// page is discarded from the navigation cache.  Values must conform to the serialization
-        /// requirements of <see cref="SuspensionManager.SessionState"/>.
-        /// </summary>
-        /// <param name="sender">The source of the event; typically <see cref="NavigationHelper"/></param>
-        /// <param name="e">Event data that provides an empty dictionary to be populated with
-        /// serializable state.</param>
-        private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
-        {
+            // TODO: Assign a bindable collection of items to this.DefaultViewModel["Items"]
         }
 
         #region NavigationHelper registration
@@ -118,12 +130,5 @@ namespace BillsReminder
 
         #endregion
 
-        private void homepageGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (((Bill)(e.ClickedItem)).BillType == BillType.CreditCard)
-            {
-                this.Frame.Navigate(typeof(CreditCards), e);
-            }
-        }
     }
 }

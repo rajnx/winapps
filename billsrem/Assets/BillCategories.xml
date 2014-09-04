@@ -1,0 +1,50 @@
+﻿<Categories>
+  <Bill Type="0" Name="ToysRus" ImagePath="" PortalUrl="https://www.onlinecreditcenter6.com/consumergen2/login.do?subActionId=1000&amp;clientId=tru&amp;accountType=generic">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="0" Name="BankOfAmerica" ImagePath="" PortalUrl="https://www.bankofamerica.com/sitemap/hub/signin.go">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="0" Name="Macys" ImagePath="" PortalUrl="https://www.macys.com/account/signin">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="0" Name="Discover" ImagePath="" PortalUrl="https://www.discovercard.com/cardmembersvcs/loginlogout/app/ac_main">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="1" Name="Home Loan" ImagePath="" PortalUrl="">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="1" Name="Car Loan" ImagePath="" PortalUrl="">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="2" Name="Phone" ImagePath="" PortalUrl="">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="3" Name="XFinity Internet" ImagePath="" PortalUrl="">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="3" Name="Qwest Internet" ImagePath="" PortalUrl="">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="4" Name="School Fees" ImagePath="" PortalUrl="">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="4" Name="DayCare Fees" ImagePath="" PortalUrl="">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+  <Bill Type="5" Name="Apartment Rent" ImagePath="" PortalUrl="">
+    <DueDate></DueDate>
+    <IsPaid></IsPaid>
+  </Bill>
+</Categories>
