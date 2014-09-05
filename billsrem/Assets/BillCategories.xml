@@ -1,49 +1,49 @@
 ﻿<Categories>
-  <Bill Type="0" Name="ToysRus" ImagePath="" PortalUrl="https://www.onlinecreditcenter6.com/consumergen2/login.do?subActionId=1000&amp;clientId=tru&amp;accountType=generic">
+  <Bill Type="0" Title="ToysRus" SubTitle="" ImagePath="" PortalUrl="https://www.onlinecreditcenter6.com/consumergen2/login.do?subActionId=1000&amp;clientId=tru&amp;accountType=generic">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="0" Name="BankOfAmerica" ImagePath="" PortalUrl="https://www.bankofamerica.com/sitemap/hub/signin.go">
+  <Bill Type="0" Title="BankOfAmerica" SubTitle="" ImagePath="" PortalUrl="https://www.bankofamerica.com/sitemap/hub/signin.go">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="0" Name="Macys" ImagePath="" PortalUrl="https://www.macys.com/account/signin">
+  <Bill Type="0" Title="Macys" SubTitle="" ImagePath="" PortalUrl="https://www.macys.com/account/signin">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="0" Name="Discover" ImagePath="" PortalUrl="https://www.discovercard.com/cardmembersvcs/loginlogout/app/ac_main">
+  <Bill Type="0" Title="Discover" SubTitle="" ImagePath="" PortalUrl="https://www.discovercard.com/cardmembersvcs/loginlogout/app/ac_main">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="1" Name="Home Loan" ImagePath="" PortalUrl="">
+  <Bill Type="1" Title="Home Loan" SubTitle="" ImagePath="" PortalUrl="">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="1" Name="Car Loan" ImagePath="" PortalUrl="">
+  <Bill Type="1" Title="Car Loan" SubTitle="" ImagePath="" PortalUrl="">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="2" Name="Phone" ImagePath="" PortalUrl="">
+  <Bill Type="2" Title="Phone" SubTitle="" ImagePath="" PortalUrl="">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="3" Name="XFinity Internet" ImagePath="" PortalUrl="">
+  <Bill Type="3" Title="XFinity Internet" SubTitle="" ImagePath="" PortalUrl="">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="3" Name="Qwest Internet" ImagePath="" PortalUrl="">
+  <Bill Type="3" Title="Qwest Internet" SubTitle="" ImagePath="" PortalUrl="">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="4" Name="School Fees" ImagePath="" PortalUrl="">
+  <Bill Type="4" Title="School Fees" SubTitle="" ImagePath="" PortalUrl="">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="4" Name="DayCare Fees" ImagePath="" PortalUrl="">
+  <Bill Type="4" Title="DayCare Fees" SubTitle="" ImagePath="" PortalUrl="">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>
-  <Bill Type="5" Name="Apartment Rent" ImagePath="" PortalUrl="">
+  <Bill Type="5" Title="Apartment Rent" SubTitle="" ImagePath="" PortalUrl="">
     <DueDate>5/1/2008 8:30:52 AM</DueDate>
     <IsPaid>0</IsPaid>
   </Bill>

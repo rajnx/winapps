@@ -66,14 +66,15 @@ namespace BillsReminder
 
                 foreach (XmlElement element in xmlList)
                 {
-                    string name = element.GetAttribute("Name");
+                    string title = element.GetAttribute("Title");
+                    string subtitle = element.GetAttribute("SubTitle");
                     string imagePath = element.GetAttribute("ImagePath");
                     string portalUrl = element.GetAttribute("PortalUrl");
                     string type = element.GetAttribute("Type");
                     string isPaid = element.SelectSingleNode("IsPaid").InnerText;
                     string dueDate = element.SelectSingleNode("DueDate").InnerText;
 
-                    Bill bill = new Bill(name, "", imagePath, (BillType)Convert.ToInt16(type), isPaid == "1", Convert.ToDateTime(dueDate));
+                    Bill bill = new Bill(title, subtitle, imagePath, portalUrl, (BillType)Convert.ToInt16(type), isPaid == "1", Convert.ToDateTime(dueDate));
                     bills.Add(bill);
                 }
             }
@@ -134,6 +135,8 @@ namespace BillsReminder
 
         private void itemGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            selectedBills.Clear();
+
             foreach (Bill bill in itemGridView.SelectedItems)
             {
                 selectedBills.Add(bill);
@@ -145,24 +148,24 @@ namespace BillsReminder
             StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("localData.xml", CreationCollisionOption.ReplaceExisting);
 
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc = await XmlDocument.LoadFromFileAsync(localFile);
 
-            XmlElement root =  xmlDoc.CreateElement("Categories");
+            XmlElement root = xmlDoc.CreateElement("Categories");
             xmlDoc.AppendChild(root);
 
             foreach (Bill bill in selectedBills)
             {
                 XmlElement xmlElement = xmlDoc.CreateElement("Bill");
                 xmlElement.SetAttribute("Type", bill.BillType.ToString());
-                xmlElement.SetAttribute("Name", bill.Title);
+                xmlElement.SetAttribute("Title", bill.Title);
+                xmlElement.SetAttribute("SubTitle", bill.SubTitle);
                 xmlElement.SetAttribute("ImagePath", bill.ImagePath);
-                xmlElement.SetAttribute("PortalUrl", bill.ImagePath);
+                xmlElement.SetAttribute("PortalUrl", bill.PortalUrl);
 
                 XmlElement dueDate = xmlDoc.CreateElement("DueDate");
-                dueDate.NodeValue = bill.Title;
+                dueDate.InnerText = bill.DueDate.ToString();
 
-                XmlElement isPaid = xmlDoc.CreateElement("DueDate");
-                isPaid.NodeValue = bill.Title;
+                XmlElement isPaid = xmlDoc.CreateElement("IsPaid");
+                isPaid.InnerText = bill.IsPaid.ToString();
 
                 xmlElement.AppendChild(dueDate);
                 xmlElement.AppendChild(isPaid);
@@ -170,7 +173,9 @@ namespace BillsReminder
                 root.AppendChild(xmlElement);
             }
 
-            await FileIO.WriteTextAsync(localFile, xmlDoc.InnerText);
+            await xmlDoc.SaveToFileAsync(localFile);
+
+            this.Frame.Navigate(typeof(HomePage));
         }
 
 

@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.Storage;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -27,9 +28,17 @@ namespace BillsReminder
             this.InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(BillCategories));
+            try
+            {
+                StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("localData.xml", CreationCollisionOption.FailIfExists);
+                this.Frame.Navigate(typeof(BillCategories));
+            }
+            catch (Exception)
+            {
+                this.Frame.Navigate(typeof(HomePage));
+            }
         }
     }
 }

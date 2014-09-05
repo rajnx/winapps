@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
+using Windows.Data.Xml.Dom;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -55,18 +56,6 @@ namespace BillsReminder
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
-
-            //Bill.Add(new Bill("Credit Card", "Pay Credit Cards Bill", "", BillType.CreditCard));
-            //Bill.Add(new Bill("Home Loan", "Pay Home Loan Bill", "", BillType.Regular));
-            //Bill.Add(new Bill("Internet", "Pay Internet Bill", "", BillType.Regular));
-            //Bill.Add(new Bill("Apartment Rent", "Pay Apartment Rent", "", BillType.Regular));
-            //Bill.Add(new Bill("Phone", "Pay Phone Bill", "", BillType.Regular));
-            //Bill.Add(new Bill("School/DayCare Fees", "Pay School/DayCare Fees", "", BillType.Regular));
-            //Bill.Add(new Bill("Car Loan", "Pay Car Loan EMI", "", BillType.Regular));
-
-
-            //this.DataContext = Bill;
-
         }
 
         /// <summary>
@@ -82,14 +71,35 @@ namespace BillsReminder
         /// session. The state will be null the first time a page is visited.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            StorageFile localFile;
             try
             {
-                localFile = await ApplicationData.Current.LocalFolder.GetFileAsync("localData.xml");
+                StorageFile localFile = await ApplicationData.Current.LocalFolder.GetFileAsync("localData.xml");
                 string localData = await FileIO.ReadTextAsync(localFile);
-                this.DataContext = ObjectSerializer<ObservableCollection<Bill>>.FromXml(localData);
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(localData);
+
+                XmlNodeList nodeList = xmlDoc.SelectNodes("Categories/Bill");
+
+                foreach (IXmlNode node in nodeList)
+                {
+                    string type = node.Attributes[0].NodeValue.ToString();
+                    string title = node.Attributes[1].NodeValue.ToString();
+                    string subtitle = node.Attributes[2].NodeValue.ToString();
+                    string imagePath = node.Attributes[3].NodeValue.ToString();
+                    string portalUrl = node.Attributes[4].NodeValue.ToString();
+
+                    string dueDate = node.FirstChild.InnerText;
+                    string isPaid = node.LastChild.InnerText;
+
+                    Bill bill = new Bill(title, subtitle, imagePath, portalUrl, BillType.CreditCard, isPaid == "1", Convert.ToDateTime(dueDate));
+                    this.Bill.Add(bill);
+                }
+
+                this.DataContext = this.Bill;
+
             }
-            catch (FileNotFoundException )
+            catch (FileNotFoundException)
             {
                 this.Frame.Navigate(typeof(BillCategories));
             }

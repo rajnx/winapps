@@ -21,15 +21,17 @@ namespace BillsReminder
         private string title;
         private string subTitle;
         private string imagePath;
+        private string portalUrl;
         private BillType billType;
         private DateTime dueDate;
         private Boolean isPaid;
 
-        public Bill(string title, string subtitle, string imagepath, BillType billType, Boolean isPaid, DateTime dueDate)
+        public Bill(string title, string subtitle, string imagepath, string portalUrl, BillType billType, Boolean isPaid, DateTime dueDate)
         {
             this.title = title;
             this.subTitle = subtitle;
             this.imagePath = imagepath;
+            this.portalUrl = portalUrl;
             this.billType = billType;
             this.dueDate = dueDate;
             this.isPaid = isPaid;
@@ -53,10 +55,28 @@ namespace BillsReminder
             set { this.subTitle = value; }
         }
 
+        public string PortalUrl
+        {
+            get { return this.portalUrl; }
+            set { this.portalUrl = value; }
+        }
+
         public string ImagePath
         {
             get { return this.imagePath; }
             set { this.imagePath = value; }
+        }
+
+        public DateTime DueDate
+        {
+            get { return this.dueDate; }
+            set { this.dueDate = value; }
+        }
+
+        public Boolean IsPaid
+        {
+            get { return this.isPaid; }
+            set { this.isPaid = value; }
         }
     }
 
