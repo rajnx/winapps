@@ -32,6 +32,8 @@ namespace BillsReminder
 
         public ObservableCollection<Bill> bills = new ObservableCollection<Bill>();
 
+        private ObservableCollection<Bill> selectedBills = new ObservableCollection<Bill>();
+
         /// <summary>
         /// This can be changed to a strongly typed view model.
         /// </summary>
@@ -49,17 +51,17 @@ namespace BillsReminder
             get { return this.navigationHelper; }
         }
 
-        public void LoadBills(ObservableCollection<Bill> bills)
+        public async void LoadBills(ObservableCollection<Bill> bills)
         {
-            XmlDocument billCategoriesXML = new XmlDocument();
-            
             try
             {
                 string categoriesXML = @"Assets\BillCategories.xml";
-                StorageFolder InstallationFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
 
-                billCategoriesXML.LoadXml(InstallationFolder.Path + categoriesXML);
-                
+                StorageFolder InstallationFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                StorageFile file = await InstallationFolder.GetFileAsync(categoriesXML);
+
+                XmlDocument billCategoriesXML = await XmlDocument.LoadFromFileAsync(file);
+
                 XmlNodeList xmlList = billCategoriesXML.SelectNodes("/Categories/Bill");
 
                 foreach (XmlElement element in xmlList)
@@ -68,14 +70,14 @@ namespace BillsReminder
                     string imagePath = element.GetAttribute("ImagePath");
                     string portalUrl = element.GetAttribute("PortalUrl");
                     string type = element.GetAttribute("Type");
-                    string isPaid = element.SelectSingleNode("/IsPaid").InnerText;
-                    string dueDate = element.SelectSingleNode("/DueDate").InnerText;
+                    string isPaid = element.SelectSingleNode("IsPaid").InnerText;
+                    string dueDate = element.SelectSingleNode("DueDate").InnerText;
 
-                    Bill bill = new Bill(name, "", imagePath, (BillType)Convert.ToInt16(type), Convert.ToBoolean(isPaid), Convert.ToDateTime(dueDate));
+                    Bill bill = new Bill(name, "", imagePath, (BillType)Convert.ToInt16(type), isPaid == "1", Convert.ToDateTime(dueDate));
                     bills.Add(bill);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 string error = e.Message;
             }
@@ -129,6 +131,48 @@ namespace BillsReminder
         }
 
         #endregion
+
+        private void itemGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (Bill bill in itemGridView.SelectedItems)
+            {
+                selectedBills.Add(bill);
+            }
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("localData.xml", CreationCollisionOption.ReplaceExisting);
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc = await XmlDocument.LoadFromFileAsync(localFile);
+
+            XmlElement root =  xmlDoc.CreateElement("Categories");
+            xmlDoc.AppendChild(root);
+
+            foreach (Bill bill in selectedBills)
+            {
+                XmlElement xmlElement = xmlDoc.CreateElement("Bill");
+                xmlElement.SetAttribute("Type", bill.BillType.ToString());
+                xmlElement.SetAttribute("Name", bill.Title);
+                xmlElement.SetAttribute("ImagePath", bill.ImagePath);
+                xmlElement.SetAttribute("PortalUrl", bill.ImagePath);
+
+                XmlElement dueDate = xmlDoc.CreateElement("DueDate");
+                dueDate.NodeValue = bill.Title;
+
+                XmlElement isPaid = xmlDoc.CreateElement("DueDate");
+                isPaid.NodeValue = bill.Title;
+
+                xmlElement.AppendChild(dueDate);
+                xmlElement.AppendChild(isPaid);
+
+                root.AppendChild(xmlElement);
+            }
+
+            await FileIO.WriteTextAsync(localFile, xmlDoc.InnerText);
+        }
+
 
     }
 }

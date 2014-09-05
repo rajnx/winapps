@@ -23,9 +23,9 @@ namespace BillsReminder
         private string imagePath;
         private BillType billType;
         private DateTime dueDate;
-        private bool isPaid;
+        private Boolean isPaid;
 
-        public Bill(string title, string subtitle, string imagepath, BillType billType, bool isPaid, DateTime dueDate)
+        public Bill(string title, string subtitle, string imagepath, BillType billType, Boolean isPaid, DateTime dueDate)
         {
             this.title = title;
             this.subTitle = subtitle;

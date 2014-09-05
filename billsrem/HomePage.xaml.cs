@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Storage;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -79,8 +80,19 @@ namespace BillsReminder
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session. The state will be null the first time a page is visited.</param>
-        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            StorageFile localFile;
+            try
+            {
+                localFile = await ApplicationData.Current.LocalFolder.GetFileAsync("localData.xml");
+                string localData = await FileIO.ReadTextAsync(localFile);
+                this.DataContext = ObjectSerializer<ObservableCollection<Bill>>.FromXml(localData);
+            }
+            catch (FileNotFoundException )
+            {
+                this.Frame.Navigate(typeof(BillCategories));
+            }
         }
 
         /// <summary>
