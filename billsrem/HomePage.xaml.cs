@@ -73,7 +73,7 @@ namespace BillsReminder
         {
             try
             {
-                StorageFile localFile = await ApplicationData.Current.LocalFolder.GetFileAsync("localData.xml");
+                StorageFile localFile = await ApplicationData.Current.LocalFolder.GetFileAsync("usersettings.xml");
                 string localData = await FileIO.ReadTextAsync(localFile);
 
                 XmlDocument xmlDoc = new XmlDocument();

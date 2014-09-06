@@ -145,7 +145,7 @@ namespace BillsReminder
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("localData.xml", CreationCollisionOption.ReplaceExisting);
+            StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("usersettings.xml", CreationCollisionOption.ReplaceExisting);
 
             XmlDocument xmlDoc = new XmlDocument();
 

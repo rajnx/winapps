@@ -32,7 +32,7 @@ namespace BillsReminder
         {
             try
             {
-                StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("localData.xml", CreationCollisionOption.FailIfExists);
+                StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("usersettings.xml", CreationCollisionOption.FailIfExists);
                 this.Frame.Navigate(typeof(BillCategories));
             }
             catch (Exception)

@@ -54,7 +54,7 @@
                         </Border>
                         <StackPanel VerticalAlignment="Bottom" Background="{ThemeResource ListViewItemOverlayBackgroundThemeBrush}">
                             <TextBlock Text="{Binding Title}" Foreground="{ThemeResource ListViewItemOverlayForegroundThemeBrush}" Style="{StaticResource BaseTextBlockStyle}" Height="30" Margin="5,0,5,0" FontWeight="SemiBold"/>
-                            <TextBlock Text="{Binding Title}" Foreground="{ThemeResource ListViewItemOverlaySecondaryForegroundThemeBrush}" Style="{StaticResource BaseTextBlockStyle}" TextWrapping="NoWrap" Margin="5,0,5,10" FontSize="12"/>
+                            <TextBlock Text="{Binding SubTitle}" Foreground="{ThemeResource ListViewItemOverlaySecondaryForegroundThemeBrush}" Style="{StaticResource BaseTextBlockStyle}" TextWrapping="NoWrap" Margin="5,0,5,10" FontSize="12"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
