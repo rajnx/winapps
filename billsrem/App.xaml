@@ -8,5 +8,6 @@
     <Application.Resources>
         <x:String x:Key="AppName">Bills Reminder</x:String>
     </Application.Resources>
+    
 </Application>
 
